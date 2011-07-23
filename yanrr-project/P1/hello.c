@@ -1,5 +1,8 @@
 #include<stdio.h>
-int main()  //void main()也可以执行，但不规范
+int main(int argc, const char *argv[])
+{
+        return 0;
+}
 {
     int i;
     for (i=0;i<10;i++)
