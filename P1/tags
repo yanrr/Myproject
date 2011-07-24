@@ -6,4 +6,4 @@
 !_TAG_PROGRAM_VERSION	5.8	//
 HOW_MANY_TIMES_TO_SAY_HELLO	hello.c	2;"	d	file:
 main	hello.c	/^int main(int argc, const char *argv[])$/;"	f
-say_three_hi	hello.c	/^void say_three_hi()$/;"	f
+say_three_hi	hello.c	/^void say_three_hi()    \/\/Ctrl-t:go back Ctrl-o:from definition to call$/;"	f
