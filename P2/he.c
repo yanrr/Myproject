@@ -1,15 +1,16 @@
 #include <stdio.h>
 int main(int argc, const char *argv[])
 {
-        int a,b;
-        char mask;
+        unsigned int a;
+        unsigned int mask;
 
         scanf("%d",&a);
-        mask = 0x3c;
-        b = a & mask;
-        b >>= 2;
-
-        printf("%d\n",b);
+        mask = (1 << 31);
+        for (; mask>0; mask >>=1)
+        {
+            printf("%c",((a & mask) > 0) ? '1' : '0');
+        }
+        printf("\n");
         return 0;
 }
 
