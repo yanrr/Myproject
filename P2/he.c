@@ -1,14 +1,18 @@
 #include <stdio.h>
 int main(int argc, const char *argv[])
-{
+{   
         unsigned int a;
-        unsigned int mask;
-
+        unsigned char mask;
+        char str[] = "0123456789abcdef";
+        int move = 28,i;
         scanf("%d",&a);
-        mask = (1 << 31);
-        for (; mask>0; mask >>=1)
+        mask = 0xf;
         {
-            printf("%c",((a & mask) > 0) ? '1' : '0');
+            for(i=0;i<8;i++)
+                {                
+                 printf("%c",str[(a >>move) & mask]);
+                 move -=4;
+                }
         }
         printf("\n");
         return 0;
