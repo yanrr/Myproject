@@ -5,11 +5,12 @@ int main(int argc, const char *argv[])
         int i=0;
         printf("array:");         
         printf("\n");
-        while(i<100)
+        do
         {
             printf("%4d",(array[i]=i));
             i++;
         }
+        while(i<100);
         printf("\n");
         return 0;
 }
