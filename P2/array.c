@@ -3,14 +3,17 @@ int main(int argc, const char *argv[])
 {
         int array[100];
         int i=0;
+        int *p;
+        p = array; 
         printf("array:");         
         printf("\n");
-        do
+        
+        for (i = 0; i < 100; i++)
         {
-            printf("%4d",(array[i]=i));
-            i++;
+            array[i] = i;
+            *p = array[i];
+            printf("%4d",*p);
         }
-        while(i<100);
         printf("\n");
         return 0;
 }
