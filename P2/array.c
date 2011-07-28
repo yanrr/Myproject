@@ -2,13 +2,25 @@
 int main(int argc, const char *argv[])
 {
         int array[100];
-        int i;
+        int i=0;
         printf("array:");         
         printf("\n");
-        for(i=0; i<100; i++)
+        while(i<100)
         {
             printf("%4d",(array[i]=i));
+            i++;
         }
         printf("\n");
         return 0;
 }
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
