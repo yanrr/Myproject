@@ -3,19 +3,27 @@
 
 struct complex_struct
 {
-         int age;
-         char name[20];
+  
+    int age;
+    char name[20];
 };
-
-typedef struct complex_struct STU;      //结构体命名一般要大写
-
+   
+typedef struct complex_struct STU;     
+  
 int main(int argc, const char *argv[])
 {
-        STU m;
+    STU m;
+    int *p1;
+    char *p2;
+  
+    p1 = &m.age
+    p2 = m.name;
+  
+  
+    *p1 = 22;
+    strcpy(p2, "yanrr");
 
-        m.age = 22;
-        strcpy(m.name, "yanrr");
-
-        printf("name:%s   age:%d\n", m.name, m.age);
-        return 0;
+    printf("name:%s   age:%d\n",p2, *p1);
+    return 0;
 }
+
