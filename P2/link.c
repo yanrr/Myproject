@@ -10,9 +10,11 @@ struct complex_struct
 };
 
 typedef struct complex_struct STU;
+
 STU *creat_link(int n);
 void print_link(STU *P);
 int count_node(STU *P);
+STU *add_node(STU *P);
 
 int main(int argc, const char *argv[])
 {
@@ -21,6 +23,8 @@ int main(int argc, const char *argv[])
         int i;
 
         head = creat_link(n);
+        print_link(head);
+        head = add_node(head);
         print_link(head);
         i =  count_node(head);
         
@@ -37,6 +41,7 @@ STU *creat_link(int n)
     STU *P = NULL;
     int a[5] = {12,14,15,13,13};
     char *Q[5] = {"zhang","wang","yan","li","zhi"};
+
     head = P = malloc(sizeof(STU));
 
     if (P == NULL)
@@ -75,7 +80,6 @@ void print_link(STU *P)
             printf("name:%s\n",P->name);
             P = P->next;
         }
-
 }
 
 int count_node(STU *P)
@@ -89,4 +93,37 @@ int count_node(STU *P)
     }
 
     return i;
+}
+
+STU *add_node(STU *P)
+{
+    STU *Q = NULL;
+    STU *head = P;
+    
+    Q = malloc(sizeof(STU));
+    if (Q == NULL)
+    {
+        perror("malloc new");
+        exit(0);
+    }
+    
+    printf("please input age:\n");
+    scanf("%d",&Q->age);
+    printf("please input name:\n");
+    scanf("%s",Q->name);
+
+    while (P->next != NULL)
+    {
+        if (P->next->age < Q->age) 
+        {
+            break;
+        }
+
+        P = P->next;
+    }
+    
+    Q->next = P->next;
+    P->next = Q;
+
+    return head;
 }
