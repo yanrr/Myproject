@@ -12,14 +12,19 @@ struct complex_struct
 typedef struct complex_struct STU;
 STU *creat_link(int n);
 void print_link(STU *P);
+int count_node(STU *P);
 
 int main(int argc, const char *argv[])
 {
         int n = 5;
         STU *head = NULL;
+        int i;
 
         head = creat_link(n);
         print_link(head);
+        i =  count_node(head);
+        
+        printf("链表的节点个数：%d\n",i);
 
         free(head);
         return 0;
@@ -68,7 +73,20 @@ void print_link(STU *P)
         {
             printf("age:%d\n",P->age);
             printf("name:%s\n",P->name);
-
             P = P->next;
         }
+
+}
+
+int count_node(STU *P)
+{
+    int i = 0;
+
+    while(P)
+    { 
+        P = P->next;
+        i++;
+    }
+
+    return i;
 }
