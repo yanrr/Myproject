@@ -6,28 +6,69 @@ struct complex_struct
 {
          int age;
          char name[20];
+         struct complex_struct *next;
 };
 
-typedef struct complex_struct STU;      
+typedef struct complex_struct STU;
+STU *creat_link(int n);
+void print_link(STU *P);
 
 int main(int argc, const char *argv[])
 {
-        STU m;
-        STU *P1 = NULL;             //P1初始化为空
-        P1 = malloc(sizeof(STU));   //为P1开辟空间，其大小为STU的长度
+        int n = 5;
+        STU *head = NULL;
 
-        if (P1 == NULL)
-        {
-                perror("malloc");   //若开辟空间出错，打印出其位置
-                exit(0);            //若开辟空间出错，则退出
-        }
+        head = creat_link(n);
+        print_link(head);
 
-  //    P1 = &m;                    其改变了之前malloc开辟的空间，与后面的free不匹配
-        P1->age  = 22;
-        strcpy(P1->name, "yanrr");
-
-        printf("name:%s   age:%d\n",P1->name,P1->age);
-
-        free(P1);                   //释放出之前开辟的空间
+        free(head);
         return 0;
+}
+
+STU *creat_link(int n)
+{
+    int i;
+    STU *head = NULL;
+    STU *P = NULL;
+    int a[5] = {12,14,15,13,13};
+    char *Q[5] = {"zhang","wang","yan","li","zhi"};
+    head = P = malloc(sizeof(STU));
+
+    if (P == NULL)
+    {
+        perror("creat");
+        exit(0);
+    }
+
+    P->age = a[0];
+    strcpy(P->name,Q[0]);
+
+    for (i = 1; i < n; i++) 
+    {
+            P->next = malloc(sizeof(STU));
+            if (P->next == NULL)
+            {
+                    perror("creat");
+                    exit(0);
+            }
+
+            P->next->age = a[i];
+            strcpy(P->next->name,Q[i]);
+            P->next->next = NULL;           
+            P = P->next;
+
+    }
+
+    return head;
+}
+
+void print_link(STU *P)
+{
+        while (P)
+        {
+            printf("age:%d\n",P->age);
+            printf("name:%s\n",P->name);
+
+            P = P->next;
+        }
 }
