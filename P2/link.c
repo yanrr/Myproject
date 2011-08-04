@@ -11,45 +11,78 @@ struct complex_struct
 
 typedef struct complex_struct STU;
 
+STU *creat_link(int n);
 void print_link(STU *P);
-STU *add_node(STU *P);
+int count_node(STU *P);
+STU *delete_node(STU *P);
 
 int main(int argc, const char *argv[])
 {
+        int n = 5;
         STU *head = NULL;
         int i;
-        int n;
-        int j;
 
-        printf("Please input the number of nodes you want to add:\n");
-        scanf("%3d",&n);
-
-        for(i=0; i<n; i++)
-        {
-            head = add_node(head);
-        }    
-
-        printf("\n");
-        j = count_node(head);
+        head = creat_link(n);
         print_link(head);
-        printf("%d\n",j);
+
+        printf("\n"); 
+
+        head = delete_node(head);
+        printf("\n"); 
+
+        print_link(head);
+        i =  count_node(head);
+        printf("The number of nodes：%d\n",i);
+        printf("\n"); 
 
         return 0;
 }
 
+STU *creat_link(int n)
+{
+    int i;
+    STU *head = NULL;
+    STU *P = NULL;
+    int a[5] = {12,14,15,14,13};
+    char *Q[5] = {"zhang","wang","yan","li","zhi"};
+    head = P = malloc(sizeof(STU));
+
+    if (P == NULL)
+    {
+        perror("creat");
+        exit(0);
+    }
+
+    P->age = a[0];
+    strcpy(P->name,Q[0]);
+
+    for (i = 1; i < n; i++) 
+    {
+            P->next = malloc(sizeof(STU));
+            if (P->next == NULL)
+            {
+                    perror("creat");
+                    exit(0);
+            }
+
+            P->next->age = a[i];
+            strcpy(P->next->name,Q[i]);
+            P->next->next = NULL;           
+            P = P->next;
+
+    }
+
+    return head;
+}
+
 void print_link(STU *P)
 {
-        if (P == NULL)
+        while (P)
         {
-            printf("\nP = NULL\n");
-        }
-
-        while (P != NULL)
-        {
-            printf("age:%d  name:%s\n",P->age,P->name);
+            printf("age:%d\n",P->age);
+            printf("name:%s\n",P->name);
             P = P->next;
         }
-        printf("\n");
 }
 
 int count_node(STU *P)
@@ -65,47 +98,55 @@ int count_node(STU *P)
     return i;
 }
 
-STU *add_node(STU *p)
+STU *delete_node(STU *P)
 {
-    STU *q = NULL;
-    STU *head = p;
-    
-    q = malloc(sizeof(STU));
-        
-    if (q == NULL)
-    {
-        perror("malloc new");
-        exit(0);
-    }
-    
-    printf("please input age:\n");
-    scanf("%d",&q->age);
-    printf("please input name:\n");
-    scanf("%s",q->name);
-    q->next = NULL;
+    STU *head = P;
+    STU *temp = NULL;
+    int dage;
+    char dname[20];
 
-    if(p == NULL)
+    if (NULL == P)
     {
-        return q;
+        printf("This link doesn's exist\n");
+
+        return NULL;
     }
 
-    if(p->age > q->age)
-    {
-        q->next = p;
-        return q;
+    printf("please input the age you want to delete:\n");
+    scanf("%d",&dage);
+//  printf("please input the name you want to delete:\n");
+//  scanf("%s",dname);
+    printf("\n");
+
+//  if (strcmp(P->name,dname) == 0)
+    if (P->age == dage)
+    {     
+        head = P->next;
+        free(P);
+        return head;
     }
-    while (p->next != NULL)
+
+    while(P->next != NULL)
     {
-        if (p->next->age > q->age) 
+    //  if(strcmp(P->name,dname) == 0)
+        if (P->next->age == dage)
         {
             break;
         }
-    
-        p = p->next;
-    }
-    q->next = p->next;
-    p->next = q;
+        P = P->next;
+    } 
+
+    if (P->next == NULL)
+    {
+        printf("The message you input just now doesn't exist!\n");
+        return head;
+    }  
+
+    temp = P->next;
+    P->next = P->next->next;
+    free(temp);
 
     return head;
+
 }
 
