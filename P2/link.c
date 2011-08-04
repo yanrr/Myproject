@@ -11,75 +11,45 @@ struct complex_struct
 
 typedef struct complex_struct STU;
 
-STU *creat_link(int n);
 void print_link(STU *P);
-int count_node(STU *P);
 STU *add_node(STU *P);
 
 int main(int argc, const char *argv[])
 {
-        int n = 5;
         STU *head = NULL;
         int i;
+        int n;
+        int j;
 
-        head = creat_link(n);
-        print_link(head);
-        head = add_node(head);
-        print_link(head);
-        i =  count_node(head);
-        
-        printf("链表的节点个数：%d\n",i);
+        printf("Please input the number of nodes you want to add:\n");
+        scanf("%3d",&n);
 
-        free(head);
+        for(i=0; i<n; i++)
+        {
+            head = add_node(head);
+        }    
+
+        printf("\n");
+        j = count_node(head);
+        print_link(head);
+        printf("%d\n",j);
+
         return 0;
-}
-
-STU *creat_link(int n)
-{
-    int i;
-    STU *head = NULL;
-    STU *P = NULL;
-    int a[5] = {12,14,15,13,13};
-    char *Q[5] = {"zhang","wang","yan","li","zhi"};
-
-    head = P = malloc(sizeof(STU));
-
-    if (P == NULL)
-    {
-        perror("creat");
-        exit(0);
-    }
-
-    P->age = a[0];
-    strcpy(P->name,Q[0]);
-
-    for (i = 1; i < n; i++) 
-    {
-            P->next = malloc(sizeof(STU));
-            if (P->next == NULL)
-            {
-                    perror("creat");
-                    exit(0);
-            }
-
-            P->next->age = a[i];
-            strcpy(P->next->name,Q[i]);
-            P->next->next = NULL;           
-            P = P->next;
-
-    }
-
-    return head;
 }
 
 void print_link(STU *P)
 {
-        while (P)
+        if (P == NULL)
         {
-            printf("age:%d\n",P->age);
-            printf("name:%s\n",P->name);
+            printf("\nP = NULL\n");
+        }
+
+        while (P != NULL)
+        {
+            printf("age:%d  name:%s\n",P->age,P->name);
             P = P->next;
         }
+        printf("\n");
 }
 
 int count_node(STU *P)
@@ -95,35 +65,47 @@ int count_node(STU *P)
     return i;
 }
 
-STU *add_node(STU *P)
+STU *add_node(STU *p)
 {
-    STU *Q = NULL;
-    STU *head = P;
+    STU *q = NULL;
+    STU *head = p;
     
-    Q = malloc(sizeof(STU));
-    if (Q == NULL)
+    q = malloc(sizeof(STU));
+        
+    if (q == NULL)
     {
         perror("malloc new");
         exit(0);
     }
     
     printf("please input age:\n");
-    scanf("%d",&Q->age);
+    scanf("%d",&q->age);
     printf("please input name:\n");
-    scanf("%s",Q->name);
+    scanf("%s",q->name);
+    q->next = NULL;
 
-    while (P->next != NULL)
+    if(p == NULL)
     {
-        if (P->next->age < Q->age) 
+        return q;
+    }
+
+    if(p->age > q->age)
+    {
+        q->next = p;
+        return q;
+    }
+    while (p->next != NULL)
+    {
+        if (p->next->age > q->age) 
         {
             break;
         }
-
-        P = P->next;
-    }
     
-    Q->next = P->next;
-    P->next = Q;
+        p = p->next;
+    }
+    q->next = p->next;
+    p->next = q;
 
     return head;
 }
+
