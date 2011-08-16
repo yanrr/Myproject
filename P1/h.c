@@ -1,5 +1,6 @@
+#include <stdio.h>
 #include "hello.h"
-void say_three_hello()
+void say_three_hi()
 {
     int i;
     for (i = 0; i < HOW_MANY_TIMES_TO_SAY_HELLO; i++)
