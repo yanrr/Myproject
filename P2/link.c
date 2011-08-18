@@ -12,17 +12,17 @@ struct student
 
 typedef struct student STU;
 
-STU *init_link(int n);
 STU *add_node(STU *P);
 void print_link(STU *P);
 int count_node(STU *P);
 STU *delete_node(STU *P);
+STU *read_date(void);
 void save_date(STU *P);
 
-char menu(void)
+void menu(void)
 {
     printf("Please make a choice:\n");
-    printf("1 :init link\n");
+    printf("1 :read date\n");
     printf("2 :add node\n");
     printf("3 :delete node\n");
     printf("4 :print link\n");
@@ -36,13 +36,7 @@ int main(int argc, const char *argv[])
         STU *head = NULL;
         int flag = 1;
         char choice = 0;
-        int n;
         int i;
-
-        printf("Please input the number of students:");
-        scanf("%d",&n);
-        getchar();
-        printf("\n");
 
         while (flag > 0)
         {
@@ -51,7 +45,7 @@ int main(int argc, const char *argv[])
             getchar();          //getchar的赋值会将输入的字符和回车一起存放在缓冲区，再写一次可将字符提取出来
             switch(choice)
             {
-                case '1':head = init_link(n);break;
+                case '1':head = read_date();break;
                 case '2':head = add_node(head);break;
                 case '3':head = delete_node(head);break;
                 case '4':print_link(head);break;
@@ -67,36 +61,39 @@ int main(int argc, const char *argv[])
         return 0;
 }
 
-STU *init_link(int n)
+STU *read_date(void)
 {
-    int i;
+    FILE *Q = NULL;
     STU *head = NULL;
     STU *P = NULL;
-    int a[n];
-    char Q[n][20];
+    int r_Snum;
+    char r_name[20];
 
+    Q = fopen("txt1","r+");
+
+    if (Q == NULL)
+    {
+        perror("fault");
+        exit(0);
+    }
+    if (fscanf(Q,"%d%s",&r_Snum,r_name) == EOF)
+    {
+        return NULL;
+    }
     head = P = malloc(sizeof(STU));
 
-    if (P == NULL)
+    if (head == NULL)
     {
         perror("malloc");
         exit(0);
     }
 
-    for (i = 0; i < n; i++)
-    {
-        printf("Please input the Snum:\n");
-        scanf("%d",&a[i]);
-        getchar();
-        printf("Please input the name:\n");
-        scanf("%s",Q[i]);
-        getchar();
-    }
 
-    P->Snum = a[0];
-    strcpy(P->name,Q[0]);
+    head->Snum = r_Snum;
+    strncpy(head->name,r_name,19);
+    head->next = NULL;
 
-    for (i = 1; i < n; i++) 
+    while (fscanf(Q,"%d%s",&r_Snum,r_name) != EOF) 
     {
             P->next = malloc(sizeof(STU));
             if (P->next == NULL)
@@ -105,12 +102,14 @@ STU *init_link(int n)
                     exit(0);
             }
 
-            P->next->Snum = a[i];
-            strcpy(P->next->name,Q[i]);
+            P->next->Snum = r_Snum;
+            strncpy(P->next->name,r_name,19);
             P->next->next = NULL;           
             P = P->next;
 
     }
+
+    
 
     return head;
 }
@@ -234,19 +233,19 @@ STU *delete_node(STU *P)
 
 void save_date(STU *P)
 {
-    FILE *Q;
+    FILE *Q = NULL;
 
-    Q = fopen("txt","w+");
+    Q = fopen("txt2","w+");
+
     if (Q == NULL)
     {
         perror("fault");
         exit(0);
     }
+    
     while (P != NULL)
     {
-        fprintf(Q,"Snum:%d     name:%s\n",P->Snum,P->name);
+        fprintf(Q,"Snum:%d  name:%s\n",P->Snum,P->name);
         P = P->next;
     }
-
 }
-
